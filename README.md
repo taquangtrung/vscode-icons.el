@@ -5,9 +5,9 @@ Library for displaying VSCode icons in Emacs.
 
 ## Introduction
 
-This library display beautiful SVG icons adopted modern VSCode extensions such as Microsoft's [vscode-icons](https://github.com/microsoft/vscode-icons),VSCode Icons Team's [vscode-icons](https://github.com/vscode-icons/vscode-icons), Material Theme's [vscode-material-icon-theme](https://github.com/material-extensions/vscode-material-icon-theme).
+This library displays beautiful SVG icons adopted from modern VSCode extensions such as Microsoft's [vscode-icons](https://github.com/microsoft/vscode-icons), VSCode Icons Team's [vscode-icons](https://github.com/vscode-icons/vscode-icons), and Material Theme's [vscode-material-icon-theme](https://github.com/material-extensions/vscode-material-icon-theme).
 
-It is inspired by [all-the-icons.el](https://github.com/domtronn/all-the-icons.el), [nerd-icons.el](https://github.com/rainstormstudio/nerd-icons.el), and [vscode-icon-emacs](https://github.com/jojojames/vscode-icon-emacs). Difference from them, [vscode-icons.el](.) provides various original, pretty, and high-quality icons using SVG format. On the other hand, [all-the-icons.el](https://github.com/domtronn/all-the-icons.el) and [nerd-icons.el](https://github.com/rainstormstudio/nerd-icons.el) only display single color icons, and [vscode-icon-emacs](https://github.com/jojojames/vscode-icon-emacs) only display PNG icons, whose quality might be affected when being resized.
+It improves existing packages like [all-the-icons.el](https://github.com/domtronn/all-the-icons.el), [nerd-icons.el](https://github.com/rainstormstudio/nerd-icons.el), and [vscode-icon-emacs](https://github.com/jojojames/vscode-icon-emacs) by providing various original, pretty, and high-quality icons using SVG format. The other packages [all-the-icons.el](https://github.com/domtronn/all-the-icons.el) and [nerd-icons.el](https://github.com/rainstormstudio/nerd-icons.el) only display single color icons while [vscode-icon-emacs](https://github.com/jojojames/vscode-icon-emacs) only display PNG icons, whose quality might be affected when being resized.
 
 ## Usage
 
