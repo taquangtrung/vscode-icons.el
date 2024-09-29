@@ -2016,7 +2016,8 @@
   (message "Clear all vscode-icons cache!"))
 
 (defun vscode-icons-icon-for-file (file &optional size)
-  "Get the formatted icon for FILE. Return `nil' if not found."
+  "Get the formatted icon for FILE. SIZE is the icon's height and width.
+Return nil if not found."
   (let* ((file-name (downcase (file-name-nondirectory file)))
          (file-ext (if-let (ext (file-name-extension file-name)) ext ""))
          (theme-background (frame-parameter nil 'background-mode))
@@ -2047,7 +2048,8 @@
             (puthash file-ext-key icon vscode-icons-file-ext-icon-cache))))))
 
 (defun vscode-icons-icon-for-dir (dir &optional size)
-  "Get the formatted icon for DIR. Return `nil' if not found."
+  "Get the formatted icon for DIR. SIZE is the icon's height and width.
+Return nil if not found."
   (let* ((dir-name (downcase (file-name-nondirectory (directory-file-name dir))))
          (theme-background (frame-parameter nil 'background-mode))
          (dir-name-key (format "%s-%s" dir-name theme-background)))
@@ -2069,7 +2071,8 @@
           (puthash dir-name-key icon vscode-icons-dir-icon-cache)))))
 
 (defun vscode-icons-icon-for-mode (mode &optional size)
-  "Get the formatted icon for MODE. Return `nil' if not found."
+  "Get the formatted icon for MODE. SIZE is the icon's height and width.
+Return nil if not found."
   (when-let* ((icon-data (cadr (assoc mode vscode-icons-mode-icon-alist)))
               (icon-subdir (car icon-data))
               (icon-name (cadr icon-data))
@@ -2096,7 +2099,8 @@
           (puthash mode-name-key icon vscode-icons-mode-icon-cache)))))
 
 (defun vscode-icons-icon-for-imenu (type &optional size)
-  "Get the formatted icon for imenu item TYPE. Return `nil' if not found."
+  "Get the formatted icon for an imenu TYPE.
+SIZE is the icon's height and width. Return nil if not found."
   (let* ((type (downcase type))
          (theme-background (frame-parameter nil 'background-mode))
          (type-key (format "%s-%s" type theme-background)))
@@ -2117,7 +2121,8 @@
           (puthash type-key icon vscode-icons-imenu-icon-cache)))))
 
 (defun vscode-icons-icon-fallback (type &optional size)
-  "Get the fallback icon for TYPE. TYPE can be `'file', `'dir', `'mode', `'imenu'"
+  "Get the fallback icon for TYPE, whose value can be `'file', `'dir', `'imenu'.
+SIZE is the icon's height and width. Return nil if not found."
   (let* ((dark-theme-p (equal (frame-parameter nil 'background-mode) 'dark))
          (icon-name (cond ((equal type 'file) vscode-icons-default-file-icon)
                           ((equal type 'dir) vscode-icons-default-dir-icon)
