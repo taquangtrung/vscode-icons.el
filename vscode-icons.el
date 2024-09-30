@@ -46,15 +46,6 @@
                                 (file-name-directory lib-path)))
   "Store the directory where the library is loaded from.")
 
-(defvar vscode-icons-default-file-icon "default_file.svg"
-  "Default icon for file.")
-
-(defvar vscode-icons-default-dir-icon "default_folder.svg"
-  "Default icon for a directory.")
-
-(defvar vscode-icons-default-imenu-icon "symbol-misc.svg"
-  "Default icon for an imenu item.")
-
 (defvar vscode-icons-file-ext-icon-alist
   '(("3g2"                 "video.svg")
     ("3gp"                 "video.svg")
@@ -2007,6 +1998,12 @@
 (defvar vscode-icons-imenu-icon-cache (make-hash-table :test 'equal)
   "A hashmap to cache icons by imenu item.")
 
+(defvar vscode-icons-fallback-file-icon-cache nil
+  "A variable to cahe the fallback file icon.")
+
+(defvar vscode-icons-fallback-dir-icon-cache nil
+  "A variable to cahe the fallback directory icon.")
+
 (defun vscode-icons-clear-all-cache ()
   "Clear all VSCode icons cache."
   (interactive)
@@ -2053,13 +2050,17 @@ Return nil if not found."
 
 (defun vscode-icons-fallback-icon-for-file (&optional size)
   "Get the fallback icon for a file."
-  (let* ((icon-file (concat vscode-icons-root
-                            (file-name-as-directory "icons")
-                            (file-name-as-directory "file")
-                            vscode-icons-default-file-icon))
-         (type (if (eq system-type 'darwin) 'imagemagick 'svg))
-         (size (or size vscode-icons-icon-size)))
-    (list 'image :file icon-file :type type :width size :height size :ascent 'center)))
+  (if vscode-icons-fallback-file-icon-cache
+      vscode-icons-fallback-file-icon-cache
+    (let* ((icon-file (concat vscode-icons-root
+                              (file-name-as-directory "icons")
+                              (file-name-as-directory "file")
+                              "default_file.svg"))
+           (type (if (eq system-type 'darwin) 'imagemagick 'svg))
+           (size (or size vscode-icons-icon-size)))
+      (setq vscode-icons-fallback-file-icon-cache
+            (list 'image :file icon-file :type type
+                  :width size :height size :ascent 'center)))))
 
 (defun vscode-icons-icon-for-dir (dir &optional size)
   "Get the formatted icon for DIR. SIZE is the icon's height and width.
@@ -2087,13 +2088,17 @@ Return nil if not found."
 
 (defun vscode-icons-fallback-icon-for-dir (&optional size)
   "Get the fallback icon for a directory."
-  (let* ((icon-file (concat vscode-icons-root
-                            (file-name-as-directory "icons")
-                            (file-name-as-directory "folder")
-                            vscode-icons-default-dir-icon))
-         (type (if (eq system-type 'darwin) 'imagemagick 'svg))
-         (size (or size vscode-icons-icon-size)))
-    (list 'image :file icon-file :type type :width size :height size :ascent 'center)))
+  (if vscode-icons-fallback-dir-icon-cache
+      vscode-icons-fallback-dir-icon-cache
+    (let* ((icon-file (concat vscode-icons-root
+                              (file-name-as-directory "icons")
+                              (file-name-as-directory "folder")
+                              "default_folder.svg"))
+           (type (if (eq system-type 'darwin) 'imagemagick 'svg))
+           (size (or size vscode-icons-icon-size)))
+      (setq vscode-icons-fallback-dir-icon-cache
+            (list 'image :file icon-file :type type
+                  :width size :height size :ascent 'center)))))
 
 (defun vscode-icons-icon-for-mode (mode &optional size)
   "Get the formatted icon for MODE. SIZE is the icon's height and width.
@@ -2126,13 +2131,7 @@ Return nil if not found."
 
 (defun vscode-icons-fallback-icon-for-mode (&optional size)
   "Get the fallback icon for a mode, using the default file icon."
-  (let* ((icon-file (concat vscode-icons-root
-                            (file-name-as-directory "icons")
-                            (file-name-as-directory "file")
-                            vscode-icons-default-file-icon))
-         (type (if (eq system-type 'darwin) 'imagemagick 'svg))
-         (size (or size vscode-icons-icon-size)))
-    (list 'image :file icon-file :type type :width size :height size :ascent 'center)))
+  (vscode-icons-fallback-icon-for-file size))
 
 (defun vscode-icons-icon-for-imenu (item &optional size)
   "Get the formatted icon for an imenu ITEM.
@@ -2157,17 +2156,9 @@ SIZE is the icon's height and width. Return nil if not found."
           ;; (message "Cache imenu item icon: %s" item)
           (puthash item-key icon vscode-icons-imenu-icon-cache)))))
 
-(defun vscode-icons-fallback-icon-for-imenu (type &optional size)
+(defun vscode-icons-fallback-icon-for-imenu (&optional size)
   "Get the fallback icon for an imenu item."
-  (let* ((dark-theme-p (equal (frame-parameter nil 'background-mode) 'dark))
-         (icon-file (concat vscode-icons-root
-                            (file-name-as-directory "icons")
-                            (file-name-as-directory "misc")
-                            (if dark-theme-p "dark" "light")
-                            vscode-icons-default-imenu-icon))
-         (type (if (eq system-type 'darwin) 'imagemagick 'svg))
-         (size (or size vscode-icons-icon-size)))
-    (list 'image :file icon-file :type type :width size :height size :ascent 'center)))
+  (vscode-icons-icon-for-imenu "misc" size))
 
 (provide 'vscode-icons)
 ;;; vscode-icons.el ends here
