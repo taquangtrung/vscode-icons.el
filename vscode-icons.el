@@ -2039,6 +2039,9 @@ Return nil if not found."
              (icon-file (or (and (equal theme-background 'dark) dark-icon)
                             (and (file-exists-p light-icon) light-icon)
                             dark-icon))
+             ;; HACK: macOS: temporarily use the `'imagemagick' type to display SVG icons
+             ;; since some Emacs distributions like Emacs Macport display SVG icons incorrectly
+             ;; TODO: change to the `'svg' type later to improve performance on macOS
              (type (if (eq system-type 'darwin) 'imagemagick 'svg))
              (size (or size vscode-icons-icon-size))
              (icon (list 'image :file icon-file :type type :width size :height size
@@ -2056,6 +2059,9 @@ Return nil if not found."
                               (file-name-as-directory "icons")
                               (file-name-as-directory "file")
                               "default_file.svg"))
+           ;; HACK: macOS: temporarily use the `'imagemagick' type to display SVG icons
+           ;; since some Emacs distributions like Emacs Macport display SVG icons incorrectly
+           ;; TODO: change to the `'svg' type later to improve performance on macOS
            (type (if (eq system-type 'darwin) 'imagemagick 'svg))
            (size (or size vscode-icons-icon-size)))
       (setq vscode-icons-fallback-file-icon-cache
@@ -2079,6 +2085,9 @@ Return nil if not found."
              (icon-file (or (and (equal theme-background 'dark) dark-icon)
                             (and (file-exists-p light-icon) light-icon)
                             dark-icon))
+             ;; HACK: macOS: temporarily use the `'imagemagick' type to display SVG icons
+             ;; since some Emacs distributions like Emacs Macport display SVG icons incorrectly
+             ;; TODO: change to the `'svg' type later to improve performance on macOS
              (type (if (eq system-type 'darwin) 'imagemagick 'svg))
              (size (or size vscode-icons-icon-size))
              (icon (list 'image :file icon-file :type type :width size :height size
@@ -2094,6 +2103,9 @@ Return nil if not found."
                               (file-name-as-directory "icons")
                               (file-name-as-directory "folder")
                               "default_folder.svg"))
+           ;; HACK: macOS: temporarily use the `'imagemagick' type to display SVG icons
+           ;; since some Emacs distributions like Emacs Macport display SVG icons incorrectly
+           ;; TODO: change to the `'svg' type later to improve performance on macOS
            (type (if (eq system-type 'darwin) 'imagemagick 'svg))
            (size (or size vscode-icons-icon-size)))
       (setq vscode-icons-fallback-dir-icon-cache
@@ -2117,11 +2129,14 @@ Return nil if not found."
                                 (if (string-prefix-p "default_" icon-name) icon-name
                                   (concat (file-name-as-directory "dark") icon-name))))
              (light-icon (concat icon-dir
-                                (if (string-prefix-p "default_" icon-name) icon-name
-                                  (concat (file-name-as-directory "light") icon-name))))
+                                 (if (string-prefix-p "default_" icon-name) icon-name
+                                   (concat (file-name-as-directory "light") icon-name))))
              (icon-file (or (and (equal theme-background 'dark) dark-icon)
                             (and (file-exists-p light-icon) light-icon)
                             dark-icon))
+             ;; HACK: macOS: temporarily use the `'imagemagick' type to display SVG icons
+             ;; since some Emacs distributions like Emacs Macport display SVG icons incorrectly
+             ;; TODO: change to the `'svg' type later to improve performance on macOS
              (type (if (eq system-type 'darwin) 'imagemagick 'svg))
              (size (or size vscode-icons-icon-size))
              (icon (list 'image :file icon-file :type type :width size :height size
@@ -2150,6 +2165,9 @@ SIZE is the icon's height and width. Return nil if not found."
              (icon-file (or (and (equal theme-background 'dark) dark-icon)
                             light-icon))
              (size (or size vscode-icons-icon-size))
+             ;; HACK: macOS: temporarily use the `'imagemagick' type to display SVG icons
+             ;; since some Emacs distributions like Emacs Macport display SVG icons incorrectly
+             ;; TODO: change to the `'svg' type later to improve performance on macOS
              (type (if (eq system-type 'darwin) 'imagemagick 'svg))
              (icon (list 'image :file icon-file :type type :width size :height size
                          :ascent 'center)))
