@@ -37,7 +37,7 @@
 ;;; Code:
 
 (defcustom vscode-icons-icon-size 18
-  "Icon size in point to be displayed."
+  "Icon size in pixel to be displayed."
   :group 'vscode-icons
   :type 'number)
 
@@ -788,7 +788,7 @@
     ("zsh"                 "shell.svg")
     ("zshenv"              "shell.svg")
     ("zshrc"               "shell.svg"))
-  "Association list of file icons by file extension.")
+  "Association list mapping file extensions to icon base names.")
 
 (defvar vscode-icons-file-name-icon-alist
   '((".angular-cli.json"                       "angular.svg")
@@ -1474,7 +1474,7 @@
     ("xmake.lua"                               "xmake.svg")
     ("yarn.lock"                               "yarn.svg")
     ("zsh-theme"                               "shell.svg"))
-  "Association list of file icons by file name.")
+  "Association list mapping file names to icon base names.")
 
 (defvar vscode-icons-dir-icon-alist
   '(("android"                          "android.svg")
@@ -1847,24 +1847,26 @@
     ("win32"                            "windows.svg")
     ("www"                              "www.svg")
     ("wwwroot"                          "www.svg"))
-  "Association list of directory icons by name.")
+  "Association list mapping directory names to icon base names.")
 
 (defvar vscode-icons-mode-icon-alist
   '((LaTeX-mode                         ("file"           "tex.svg"))
     (c++-mode                           ("file"           "cpp.svg"))
     (c-mode                             ("file"           "c.svg"))
     (compilation-mode                   ("misc"           "lightbulb.svg"))
+    (conf-toml-mode                     ("file"           "toml.svg"))
     (cpp-mode                           ("file"           "cpp.svg"))
     (crystal-mode                       ("file"           "crystal.svg"))
     (debugger-mode                      ("misc"           "debug.svg"))
-    (diff-mode                          ("misc"           "diff.svg"))
+    (diff-mode                          ("file"           "diff.svg"))
     (dired-mode                         ("folder"         "default_folder.svg"))
     (elfeed-search-mode                 ("file"           "rss.svg"))
     (elfeed-show-mode                   ("file"           "rss.svg"))
     (elfeed-summary-mode                ("file"           "rss.svg"))
     (emacs-lisp-mode                    ("file"           "emacs.svg"))
-    (eshell-mode                        ("misc"           "console.svg"))
+    (eshell-mode                        ("app"            "terminal__papirus.svg"))
     (eww-mode                           ("file"           "chrome__material.svg"))
+    (fundamental-mode                   ("file"           "default_file.svg"))
     (helm-major-mode                    ("misc"           "loading.svg"))
     (help-mode                          ("misc"           "help.svg"))
     (helpful-mode                       ("misc"           "help.svg"))
@@ -1879,11 +1881,13 @@
     (lisp-mode                          ("file"           "lisp.svg"))
     (lua-mode                           ("file"           "lua.svg"))
     (magit-diff-mode                    ("misc"           "git-compare.svg"))
-    (magit-log-mode                     ("misc"           "git-commit.svg"))
-    (magit-process-mode                 ("misc"           "server-process.svg"))
-    (magit-status-mode                  ("misc"           "git-commit.svg"))
+    (magit-log-mode                     ("file"           "git.svg"))
+    (magit-process-mode                 ("file"           "git.svg"))
+    (magit-status-mode                  ("file"           "git.svg"))
     (markdown-mode                      ("file"           "markdown__material.svg"))
-    (messages-buffer-mode               ("misc"           "info.svg"))
+    (messages-buffer-mode               ("app"            "notifications__papirus.svg"))
+    (minibuffer-inactive-mode           ("file"           "default_file.svg"))
+    (minibuffer-mode                    ("file"           "default_file.svg"))
     (native-comp-limple-mode            ("misc"           "lightbulb.svg"))
     (org-agenda-mode                    ("misc"           "calendar.svg"))
     (org-mode                           ("file"           "org.svg"))
@@ -1892,9 +1896,10 @@
     (rust-mode                          ("file"           "rust.svg"))
     (rustic-mode                        ("file"           "rust.svg"))
     (sh-mode                            ("file"           "shell.svg"))
-    (shell-mode                         ("misc"           "console.svg"))
+    (shell-mode                         ("app"            "terminal__papirus.svg"))
     (shell-script-mode                  ("file"           "shell.svg"))
     (solidity-mode                      ("file"           "solidity.svg"))
+    (special-mode                       ("file"           "default_file.svg"))
     (rjsx-mode                          ("file"           "js.svg"))
     (text-mode                          ("file"           "text.svg"))
     (tsx-ts-mode                        ("file"           "typescript.svg"))
@@ -1902,13 +1907,16 @@
     (typescript-mode                    ("file"           "typescript.svg"))
     (typescript-ts-mode                 ("file"           "typescript.svg"))
     (typescript-tsx-mode                ("file"           "typescript.svg"))
-    (vterm-mode                         ("misc"           "console.svg"))
+    (vterm-mode                         ("app"            "terminal__papirus.svg"))
     (xwidget-webkit-mode                ("file"           "chrome__material.svg")))
-  "Association list of major mode icons by major mode.")
+  "Association list mapping major mode names to icon base names.")
 
 (defvar vscode-icons-buffer-regex-icon-alist
-  '(("\\*scratch"                        ("file"           "tex.svg")))
-  "Association list of buffer icons by buffer name regex.")
+  '(("\\*scratch"                       ("app"            "notes__papirus.svg"))
+    ("\\*Warning"                       ("misc"           "warning.svg"))
+    ("-[lL]og\\*"                       ("file"           "log.svg"))
+    ("\\(error\\|errors\\)\\*"          ("misc"           "error.svg")))
+  "Association list mapping buffer name regexes to icon base names.")
 
 (defvar vscode-icons-imenu-icon-alist
   '(("array"              "symbol-array.svg")
@@ -1988,7 +1996,7 @@
     ("variables"          "symbol-variable.svg")
     ("misc"               "symbol-misc.svg")
     ("top level"          nil))
-  "Association list of imenu icons by item name.")
+  "Association list mapping imenu item names to icon base names.")
 
 (defvar vscode-icons-file-name-icon-cache (make-hash-table :test 'equal)
   "A hashmap to cache icons by file name.")
@@ -2002,14 +2010,17 @@
 (defvar vscode-icons-mode-icon-cache (make-hash-table :test 'equal)
   "A hashmap to cache icons by major mode.")
 
+(defvar vscode-icons-buffer-regex-icon-cache (make-hash-table :test 'equal)
+  "A hashmap to cache icons by buffer name regex.")
+
 (defvar vscode-icons-imenu-icon-cache (make-hash-table :test 'equal)
   "A hashmap to cache icons by imenu item.")
 
-(defun vscode-icons--get-icon-file (icon-dir icon-name)
+(defun vscode-icons--get-icon (icon-dir icon-name)
   "Internal function to get icon file."
-  (let ((default-icon (concat icon-dir icon-name))
-        (dark-icon (concat icon-dir (file-name-as-directory "dark") icon-name))
-        (light-icon (concat icon-dir (file-name-as-directory "light") icon-name)))
+  (let* ((default-icon (concat icon-dir icon-name))
+         (dark-icon (concat icon-dir (file-name-as-directory "dark") icon-name))
+         (light-icon (concat icon-dir (file-name-as-directory "light") icon-name)))
     (or (and (file-exists-p default-icon)
              default-icon)
         (and (equal (frame-parameter nil 'background-mode) 'light)
@@ -2038,14 +2049,10 @@ Return nil if not found."
              (icon-dir (concat vscode-icons-root
                                (file-name-as-directory "icons")
                                (file-name-as-directory "file")))
-             (icon-file (vscode-icons--get-icon-file icon-dir icon-name))
-             ;; HACK: macOS: temporarily use the `'imagemagick' type to display SVG icons
-             ;; since some Emacs distributions like Emacs Macport display SVG icons incorrectly
-             ;; TODO: change to the `'svg' type later to improve performance on macOS
-             (type (if (eq system-type 'darwin) 'imagemagick 'svg))
+             (icon-file (vscode-icons--get-icon icon-dir icon-name))
              (size (or size vscode-icons-icon-size))
-             (icon (list 'image :file icon-file :type type :width size :height size
-                         :ascent 'center)))
+             (icon (list 'image :file icon-file :type 'svg
+                         :width size :height size :ascent 'center)))
           ;; (message "Cache file %s icon: %s" (if found-by-file-name "name" "ext") file-name)
           (if found-by-file-name
               (puthash file-name-key icon vscode-icons-file-name-icon-cache)
@@ -2068,14 +2075,10 @@ Return nil if no icon is found."
              (icon-dir (concat vscode-icons-root
                                (file-name-as-directory "icons")
                                (file-name-as-directory "folder")))
-             (icon-file (vscode-icons--get-icon-file icon-dir icon-name))
-             ;; HACK: macOS: temporarily use the `'imagemagick' type to display SVG icons
-             ;; since some Emacs distributions like Emacs Macport display SVG icons incorrectly
-             ;; TODO: change to the `'svg' type later to improve performance on macOS
-             (type (if (eq system-type 'darwin) 'imagemagick 'svg))
+             (icon-file (vscode-icons--get-icon icon-dir icon-name))
              (size (or size vscode-icons-icon-size))
-             (icon (list 'image :file icon-file :type type :width size :height size
-                         :ascent 'center)))
+             (icon (list 'image :file icon-file :type 'svg
+                         :width size :height size :ascent 'center)))
           ;; (message "Cache dir icon: %s" dir)
           (puthash dir-name-key icon vscode-icons-dir-icon-cache)))))
 
@@ -2095,14 +2098,10 @@ Return nil if not found."
             ((icon-dir (concat vscode-icons-root
                                (file-name-as-directory "icons")
                                (file-name-as-directory icon-subdir)))
-             (icon-file (vscode-icons--get-icon-file icon-dir icon-name))
-             ;; HACK: macOS: temporarily use the `'imagemagick' type to display SVG icons
-             ;; since some Emacs distributions like Emacs Macport display SVG icons incorrectly
-             ;; TODO: change to the `'svg' type later to improve performance on macOS
-             (type (if (eq system-type 'darwin) 'imagemagick 'svg))
+             (icon-file (vscode-icons--get-icon icon-dir icon-name))
              (size (or size vscode-icons-icon-size))
-             (icon (list 'image :file icon-file :type type :width size :height size
-                         :ascent 'center)))
+             (icon (list 'image :file icon-file :type 'svg
+                         :width size :height size :ascent 'center)))
           ;; (message "Cache major mode icon: %s" mode)
           (puthash mode-name-key icon vscode-icons-mode-icon-cache)))))
 
@@ -2110,6 +2109,28 @@ Return nil if not found."
   "Get the default icon for a mode."
   ;; Return a default file icon
   (vscode-icons-default-file-icon size))
+
+(defun vscode-icons-icon-for-buffer (buffer &optional size)
+  "Get the formatted icon for BUFFER. SIZE is the icon's height and width.
+Return nil if not found."
+  (when-let* ((buffer-name (with-current-buffer buffer (buffer-name)))
+              (icon-data (cadr (cl-find-if (lambda (it) (string-match (car it) buffer-name))
+                                          vscode-icons-buffer-regex-icon-alist)))
+              (icon-subdir (car icon-data))
+              (icon-name (cadr icon-data))
+              (buffer-name-key (format "%s-%s" buffer-name
+                                     (frame-parameter nil 'background-mode))))
+    (or (gethash buffer-name-key vscode-icons-buffer-regex-icon-cache)
+        (when-let*
+            ((icon-dir (concat vscode-icons-root
+                               (file-name-as-directory "icons")
+                               (file-name-as-directory icon-subdir)))
+             (icon-file (vscode-icons--get-icon icon-dir icon-name))
+             (size (or size vscode-icons-icon-size))
+             (icon (list 'image :file icon-file :type 'svg
+                         :width size :height size :ascent 'center)))
+          ;; (message "Cache buffer icon: %s" buffer-name)
+          (puthash buffer-name-key icon vscode-icons-buffer-regex-icon-cache)))))
 
 (defun vscode-icons-icon-for-imenu (item &optional size)
   "Get the formatted icon for an imenu ITEM.
@@ -2122,14 +2143,10 @@ SIZE is the icon's height and width. Return nil if not found."
              (icon-dir (concat vscode-icons-root
                                (file-name-as-directory "icons")
                                (file-name-as-directory "misc")))
-             (icon-file (vscode-icons--get-icon-file icon-dir icon-name))
-             ;; HACK: macOS: temporarily use the `'imagemagick' type to display SVG icons
-             ;; since some Emacs distributions like Emacs Macport display SVG icons incorrectly
-             ;; TODO: change to the `'svg' type later to improve performance on macOS
-             (type (if (eq system-type 'darwin) 'imagemagick 'svg))
+             (icon-file (vscode-icons--get-icon icon-dir icon-name))
              (size (or size vscode-icons-icon-size))
-             (icon (list 'image :file icon-file :type type :width size :height size
-                         :ascent 'center)))
+             (icon (list 'image :file icon-file :type 'svg
+                         :width size :height size :ascent 'center)))
           ;; (message "Cache imenu item icon: %s" item)
           (puthash item-key icon vscode-icons-imenu-icon-cache)))))
 
@@ -2144,6 +2161,7 @@ SIZE is the icon's height and width. Return nil if not found."
                      vscode-icons-file-ext-icon-cache
                      vscode-icons-dir-icon-cache
                      vscode-icons-mode-icon-cache
+                     vscode-icons-buffer-regex-icon-cache
                      vscode-icons-imenu-icon-cache))
     (clrhash tbl))
   (message "Clear all vscode-icons cache!"))

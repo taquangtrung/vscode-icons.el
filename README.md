@@ -43,6 +43,7 @@ All icons are stored in the folder [icons](icons). Their structure is like below
 
 - [icons/file](icons/file): all file icons.
 - [icons/folder](icons/folder): all folder icons.
+- [icons/app](icons/folder): all application icons.
 - [icons/misc](icons/misc): all other icons.
 
 Icons without a name suffix are adopted from the Microsoft's [vscode-icons](https://github.com/microsoft/vscode-icons) or the VSCode Icons Team's [vscode-icons](https://github.com/vscode-icons/vscode-icons). Icons adopted from other sources are named with suffices indicating their sources. For examples, the name `rust__material.svg` indicates that it is adopted from the Material Icon Theme.
@@ -54,6 +55,7 @@ This package is inspired by the following projects:
 - [all-the-icons.el](https://github.com/domtronn/all-the-icons.el): Emacs library to display icons using various icon fonts.
 - [nerd-icons.el](https://github.com/rainstormstudio/nerd-icons.el): Emacs library to display icons using Nerd fonts.
 - [vscode-icon-emacs](https://github.com/jojojames/vscode-icon-emacs): Emacs library to display VSCode icons in PNG format.
-- [vscode-icons](https://github.com/microsoft/vscode-icons): Microsoft's VSCode extension to display icons.
-- [vscode-icons](https://github.com/vscode-icons/vscode-icons): VSCode Icon Team's extension to display icons.
-- [vscode-material-icon-theme](https://github.com/material-extensions/vscode-material-icon-theme): Material Theme's VSCode extension to display icons.
+- [vscode-icons](https://github.com/microsoft/vscode-icons): VSCode extension to the official Microsoft's VSCode icons.
+- [vscode-icons](https://github.com/vscode-icons/vscode-icons): VSCode extension to display VSCode Icons Team's icons.
+- [vscode-material-icon-theme](https://github.com/material-extensions/vscode-material-icon-theme): VSCode extension to display Material Theme icons.
+- [papirus-icon-theme](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme): Papirus icon theme for Linux.
