@@ -17,7 +17,7 @@ Below are some useful APIs to get icons:
 - `vscode-icons-icon-for-dir`
 - `vscode-icons-icon-for-mode`
 - `vscode-icons-icon-for-imenu`
-- `vscode-icons-icon-fallback`
+- `vscode-icons-icon-for-buffer`
 
 Sample code to use the APIs to prepend the icon in front of a file name.
 
@@ -26,9 +26,9 @@ Sample code to use the APIs to prepend the icon in front of a file name.
   "Prepend an icon in front of a file name."
   (let* ((icon (if (file-directory-p file-name)
                    (or (vscode-icons-icon-for-dir file-name)
-                       (vscode-icons-icon-fallback 'dir))
+                       (vscode-icons-default-dir-icon))
                  (or (vscode-icons-icon-for-file file-name)
-                     (vscode-icons-icon-fallback 'file)))))
+                     (vscode-icons-default-file-icon)))))
     ;; Return a new string which is prepended with the file icon.
     (concat (propertize " " 'display icon) " " file-name)))
 ```
@@ -41,12 +41,10 @@ Illustration of integrating `vscode-icons` into `dired-mode`:
 
 All icons are stored in the folder [icons](icons). Their structure is like below:
 
-- [icons/file](icons/file): all file icons.
-- [icons/folder](icons/folder): all folder icons.
-- [icons/app](icons/folder): all application icons.
-- [icons/misc](icons/misc): all other icons.
-
-Icons without a name suffix are adopted from the Microsoft's [vscode-icons](https://github.com/microsoft/vscode-icons) or the VSCode Icons Team's [vscode-icons](https://github.com/vscode-icons/vscode-icons). Icons adopted from other sources are named with suffices indicating their sources. For examples, the name `rust__material.svg` indicates that it is adopted from the Material Icon Theme.
+- [icons/vscode](icons/vscode): the official Microsoft's VSCode icons.
+- [icons/vscode-icons](icons/vscode-icons): VSCode Icons Team's icons.
+- [icons/material](icons/material): Material Theme icons.
+- [icons/papirus](icons/papirus): Papirus theme icons.
 
 ## Acknowledgements
 
