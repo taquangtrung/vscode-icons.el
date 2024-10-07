@@ -256,7 +256,7 @@
     ("falcon"                    ("vscode-icons"       "file_falcon.svg"))
     ("fbx"                       ("vscode-icons"       "file_fbx.svg"))
     ("fig"                       ("vscode-icons"       "file_matlab.svg"))
-    ("fish"                      ("vscode-icons"       "file_shell.svg"))
+    ("fish"                      ("papirus"            "fish.svg"))
     ("fla"                       ("vscode-icons"       "file_fla.svg"))
     ("flac"                      ("vscode-icons"       "file_audio.svg"))
     ("flex"                      ("vscode-icons"       "file_lex.svg"))
@@ -879,6 +879,7 @@
     ("^\\.postcssrc"                         ("vscode-icons"      "file_postcssconfig.svg"))
     ("^\\.pre-commit-config.yaml"            ("vscode-icons"      "file_precommit.svg"))
     ("^\\.prettier"                          ("vscode-icons"      "file_prettier.svg"))
+    ("^\\.profile"                           ("vscode-icons"      "file_shell.svg"))
     ("^\\.pug-lintrc"                        ("vscode-icons"      "file_pug.svg"))
     ("^\\.pyup"                              ("vscode-icons"      "file_pyup.svg"))
     ("^\\.rehype"                            ("vscode-icons"      "file_rehype.svg"))
@@ -938,6 +939,7 @@
     ("^favicon\\.ico"                        ("vscode-icons"      "file_favicon.svg"))
     ("^firebase\\.json"                      ("vscode-icons"      "file_firebasehosting.svg"))
     ("^firestore\\."                         ("vscode-icons"      "file_firestore.svg"))
+    ("^fish_\\(plugins\\|variables\\)"       ("papirus"           "fish.svg"))
     ("^gatsby-.*\\.\\(ts\\|js\\)"            ("vscode-icons"      "file_gatsby.svg"))
     ("^gemfile"                              ("vscode-icons"      "file_bundler.svg"))
     ("^gitconfig"                            ("vscode-icons"      "file_ini.svg"))
@@ -1548,8 +1550,8 @@
     ("top level"                        nil))
   "Association list mapping imenu item names to icon base names.")
 
-(defvar vscode-icons-file-name-icon-cache (make-hash-table :test 'equal)
-  "A hashmap to cache icons by file name.")
+(defvar vscode-icons-file-regex-icon-cache (make-hash-table :test 'equal)
+  "A hashmap to cache icons by file name regex.")
 
 (defvar vscode-icons-file-ext-icon-cache (make-hash-table :test 'equal)
   "A hashmap to cache icons by file extension.")
@@ -1588,7 +1590,7 @@ Return nil if not found."
          (file-name-key (format "%s-%s" file-name (frame-parameter nil 'background-mode)))
          (file-ext-key (format "%s-%s" file-ext (frame-parameter nil 'background-mode)))
          found-by-file-name)
-    (or (gethash file-name-key vscode-icons-file-name-icon-cache)
+    (or (gethash file-name-key vscode-icons-file-regex-icon-cache)
         (gethash file-ext-key vscode-icons-file-ext-icon-cache)
         (when-let*
             ((icon-data (or (and (string= file "") '("vscode-icons" "default_file.svg"))
@@ -1609,7 +1611,7 @@ Return nil if not found."
                          :width size :height size :ascent 'center)))
           ;; (message "Cache file %s icon: %s" (if found-by-file-name "name" "ext") file-name)
           (if found-by-file-name
-              (puthash file-name-key icon vscode-icons-file-name-icon-cache)
+              (puthash file-name-key icon vscode-icons-file-regex-icon-cache)
             (puthash file-ext-key icon vscode-icons-file-ext-icon-cache))))))
 
 (defun vscode-icons-default-file-icon (&optional size)
@@ -1715,7 +1717,7 @@ SIZE is the icon's height and width. Return nil if not found."
 (defun vscode-icons-clear-all-cache ()
   "Clear all VSCode icons cache."
   (interactive)
-  (dolist (tbl (list vscode-icons-file-name-icon-cache
+  (dolist (tbl (list vscode-icons-file-regex-icon-cache
                      vscode-icons-file-ext-icon-cache
                      vscode-icons-dir-icon-cache
                      vscode-icons-mode-icon-cache
