@@ -282,7 +282,7 @@
     ("themerc"                            ("file-icons"        "file_config.svg"))
     ("tox.ini"                            ("file-icons"        "file_tox.svg"))
     ("trashrc"                            ("file-icons"        "file_config.svg"))
-    ("tsconfig..*.json"                   ("file-icons"        "file_tsconfig.svg"))
+    ("tsconfig.json"                      ("file-icons"        "file_tsconfig.svg"))
     ("tslint.json"                        ("file-icons"        "file_tslint.svg"))
     ("tslint.yaml"                        ("file-icons"        "file_tslint.svg"))
     ("tslint.yml"                         ("file-icons"        "file_tslint.svg"))
